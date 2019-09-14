@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VisualNovelManagerCore.Database;
+using VisualNovelManagerCore;
 
 namespace VisualNovelManagerv2
 {
@@ -29,9 +30,8 @@ namespace VisualNovelManagerv2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var foo = new  LiteDb();
-            foo.UpdateDb();
-            Debug.WriteLine("");
+            var tester = new TesterForDebug();
+            tester.CallTestMethods();
         }
     }
 }
