@@ -15,7 +15,7 @@ namespace VisualNovelManagerCore.Controls.Main.Startup
             CreateFolders();
         }
 
-        private void CreateFolders()
+        public void CreateFolders()
         {
             Directory.CreateDirectory(Globals.DirectoryPath + @"\Data\config");
             Directory.CreateDirectory(Globals.DirectoryPath + @"\Data\Database");
@@ -25,6 +25,16 @@ namespace VisualNovelManagerCore.Controls.Main.Startup
             Directory.CreateDirectory(Globals.DirectoryPath + @"\Data\libs\");
             Directory.CreateDirectory(Globals.DirectoryPath + @"\Data\res\icons\country_flags");
             Directory.CreateDirectory(Globals.DirectoryPath + @"\Data\res\icons\platforms");
+        }
+
+        public void CheckForDatabase()
+        {
+
+        }
+
+        public void CreateDatabase()
+        {
+
         }
     }
 }

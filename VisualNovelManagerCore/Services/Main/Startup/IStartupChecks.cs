@@ -9,5 +9,8 @@ namespace VisualNovelManagerCore.Services.Main.Startup
     public interface IStartupChecks
     {
         void RunStartupChecks();
+        void CreateFolders();
+        void CheckForDatabase();
+        void CreateDatabase();
     }
 }
