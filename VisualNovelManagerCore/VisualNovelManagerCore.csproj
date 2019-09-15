@@ -90,11 +90,13 @@
     <Compile Include="Helper\Converters\Base64Converter.cs" />
     <Compile Include="Helper\Converters\NullImageConverter.cs" />
     <Compile Include="Helper\Converters\YesNoBoolConverter.cs" />
+    <Compile Include="Helper\ConvertTextBBcode.cs" />
     <Compile Include="Helper\CreateIconHelper.cs" />
     <Compile Include="Helper\EmptyBitmap.cs" />
     <Compile Include="Helper\Extensions\BindableRichTextBox.cs" />
     <Compile Include="Helper\Extensions\PasswordBoxBindingBehavior.cs" />
     <Compile Include="Helper\Extensions\RangeEnabledObservableCollection.cs" />
+    <Compile Include="Helper\Extensions\TextBoxExtension.cs" />
     <Compile Include="Helper\IsJpnText.cs" />
     <Compile Include="Helper\MeasureStringSize.cs" />
     <Compile Include="Helper\MutableKeyValuePair.cs" />
