@@ -36,5 +36,11 @@ namespace VisualNovelManagerCore.Controls.Main.Startup
         {
 
         }
+
+        public void LoadConfigSettings()
+        {
+            Globals.MaxSpoiler = (SpoilerLevel)Properties.Settings.Default.MaxSpoilerLevel;
+            Globals.NsfwEnabled = Properties.Settings.Default.NsfwEnabled;
+        }
     }
 }

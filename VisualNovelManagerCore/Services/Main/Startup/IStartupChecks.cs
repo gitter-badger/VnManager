@@ -12,5 +12,6 @@ namespace VisualNovelManagerCore.Services.Main.Startup
         void CreateFolders();
         void CheckForDatabase();
         void CreateDatabase();
+        void LoadConfigSettings();
     }
 }
