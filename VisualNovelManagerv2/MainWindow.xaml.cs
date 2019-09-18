@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,18 +11,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VisualNovelManagerCore.Database;
+using VisualNovelManagerCore;
 
-namespace VisualNovelManagerv2.Views
+namespace VisualNovelManagerv2
 {
     /// <summary>
-    /// Interaction logic for ShellView.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class ShellView : Window
+    public partial class MainWindow : Window
     {
-        public ShellView()
+        public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var tester = new TesterForDebug();
+            tester.CallTestMethods();
         }
     }
 }
