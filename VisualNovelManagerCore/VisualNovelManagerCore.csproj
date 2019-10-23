@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.0.1\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
@@ -116,6 +113,10 @@
     <Compile Include="TesterForDebug.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LiteDB-Nightly\LiteDB.csproj">
+      <Project>{fd1f898a-d735-46b9-b308-6fd65f9ed449}</Project>
+      <Name>LiteDB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VndbSharp\VndbSharp\VndbSharp.csproj">
       <Project>{1f92c059-4b95-433b-a780-04d5a7f36533}</Project>
       <Name>VndbSharp</Name>
