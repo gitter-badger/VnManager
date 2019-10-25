@@ -50,7 +50,6 @@
   <ItemGroup>
     <Compile Include="Controls\Main\Startup\StartupChecks.cs" />
     <Compile Include="Controls\Vndb\AddVn\AddDataToDb.cs" />
-    <Compile Include="Controls\Vndb\AddVn\FormatVnData.cs" />
     <Compile Include="Controls\Vndb\AddVn\GetVnData.cs" />
     <Compile Include="Controls\Vndb\Screenshot\ScreenshotData.cs" />
     <Compile Include="Controls\Vndb\VnCharacter\VnCharacterData.cs" />

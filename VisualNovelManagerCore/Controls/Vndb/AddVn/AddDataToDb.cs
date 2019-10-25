@@ -24,257 +24,326 @@ namespace VisualNovelManagerCore.Controls.Vndb.AddVn
 
         }
 
-        private async Task AddVnInfo(VndbResponse<VisualNovel> visualNovels)
+        internal void FormatVnInfo(VndbResponse<VisualNovel> visualNovels)
         {
-            if (visualNovels.FirstOrDefault() != null)
+            using (var db = new LiteDatabase(@"Database.db"))
             {
-                VisualNovel visualNovel = visualNovels.FirstOrDefault();
-
-                //info
-                VnInfo dbInfo = new VnInfo()
+                var dbVnInfo = db.GetCollection<VnInfo>("vninfo");
+                var dbVnInfoAnime = db.GetCollection<VnInfoAnime>("vninfoanime");
+                var dbVnInfoLinks = db.GetCollection<VnInfoLinks>("vninfolinks");
+                var dbVnInfoScreens = db.GetCollection<VnInfoScreens>("vninfoscreens");
+                var dbVnInfoRelations = db.GetCollection<VnInfoRelations>("vninforelations");
+                var dbVnInfoStaff = db.GetCollection<VnInfoStaff>("vninfostaff");
+                var dbVnInfoTags = db.GetCollection<VnInfoTags>("vninfotags");
+                if (visualNovels.FirstOrDefault() != null)
                 {
-                    VnId = visualNovel.Id,
-                    Title = visualNovel.Name,
-                    Original = visualNovel.OriginalName,
-                    Released = visualNovel.Released?.ToString() ?? null,
-                    Languages = ConvertToCsv(visualNovel.Languages),
-                    OriginalLanguages = ConvertToCsv(visualNovel.OriginalLanguages),
-                    Platforms = ConvertToCsv(visualNovel.Platforms),
-                    Aliases = ConvertToCsv(visualNovel.Aliases),
-                    Length = visualNovel.Length?.ToString(),
-                    Description = visualNovel.Description,
-                    ImageLink = visualNovel.Image,
-                    ImageNsfw = visualNovel.IsImageNsfw,
-                    Popularity = visualNovel.Popularity,
-                    Rating = visualNovel.Rating
-                };
+                    VisualNovel visualNovel = visualNovels.FirstOrDefault();
 
-                //anime
-                List<VnInfoAnime> vnAnime = new List<VnInfoAnime>();
-                foreach (AnimeMetadata anime in visualNovel.Anime)
-                {
-                    vnAnime.Add(new VnInfoAnime()
+                    //info
+                    if (visualNovel != null)
+                    {
+                        VnInfo vnInfo = new VnInfo()
+                        {
+                            VnId = visualNovel.Id,
+                            Title = visualNovel.Name,
+                            Original = visualNovel.OriginalName,
+                            Released = visualNovel.Released?.ToString() ?? null,
+                            Languages = ConvertToCsv(visualNovel.Languages),
+                            OriginalLanguages = ConvertToCsv(visualNovel.OriginalLanguages),
+                            Platforms = ConvertToCsv(visualNovel.Platforms),
+                            Aliases = ConvertToCsv(visualNovel.Aliases),
+                            Length = visualNovel.Length?.ToString(),
+                            Description = visualNovel.Description,
+                            ImageLink = visualNovel.Image,
+                            ImageNsfw = visualNovel.IsImageNsfw,
+                            Popularity = visualNovel.Popularity,
+                            Rating = visualNovel.Rating
+                        };
+                        dbVnInfo.Upsert(vnInfo);
+                    }
+
+                    if (visualNovel == null) return;
+                    //anime
+                    List<VnInfoAnime> vnAnime = new List<VnInfoAnime>();
+                    foreach (AnimeMetadata anime in visualNovel.Anime)
+                    {
+                        vnAnime.Add(new VnInfoAnime()
+                        {
+                            VnId = visualNovel.Id,
+                            AniDbId = anime.AniDbId,
+                            AnnId = anime.AnimeNewsNetworkId,
+                            AniNfoId = anime.AnimeNfoId,
+                            TitleEng = anime.RomajiTitle,
+                            TitleJpn = anime.KanjiTitle,
+                            Year = anime.AiringYear?.ToString() ?? null,
+                            AnimeType = anime.Type
+                        });
+                    }
+                    dbVnInfoAnime.Upsert(vnAnime);
+
+                    //links
+                    VnInfoLinks vnLinks = new VnInfoLinks()
                     {
                         VnId = visualNovel.Id,
-                        AniDbId = anime.AniDbId,
-                        AnnId = anime.AnimeNewsNetworkId,
-                        AniNfoId = anime.AnimeNfoId,
-                        TitleEng = anime.RomajiTitle,
-                        TitleJpn = anime.KanjiTitle,
-                        Year = anime.AiringYear?.ToString() ?? null,
-                        AnimeType = anime.Type
-                    });                   
-                }
-
-                //links
-                VnInfoLinks vnLinks = new VnInfoLinks()
-                {
-                    VnId = visualNovel.Id,
-                    Wikipedia = visualNovel.VisualNovelLinks.Wikipedia,
-                    Encubed = visualNovel.VisualNovelLinks.Encubed,
-                    Renai = visualNovel.VisualNovelLinks.Renai
-                };
-
-                //screenshots
-                if (visualNovel.Screenshots.Count > 0)
-                {
-                    List<VnInfoScreens> vnScreenshots = new List<VnInfoScreens>();
-                    foreach (ScreenshotMetadata screenshot in visualNovel.Screenshots)
-                    {
-                        vnScreenshots.Add(new VnInfoScreens()
-                        {
-                            VnId = visualNovel.Id,
-                            ImageUrl = screenshot.Url,
-                            ReleaseId = screenshot.ReleaseId,
-                            Nsfw = screenshot.IsNsfw,
-                            Height = screenshot.Height,
-                            Width = screenshot.Width
-                        });
-                    }
-                }
-
-                //relations
-                if (visualNovel.Relations.Count > 0)
-                {
-                    List<VnInfoRelations> vnRelations = new List<VnInfoRelations>();
-                    foreach (VisualNovelRelation relation in visualNovel.Relations)
-                    {
-                        vnRelations.Add(new VnInfoRelations()
-                        {
-                            VnId = visualNovel.Id,
-                            RelationId = relation.Id,
-                            Relation = relation.Type.ToString(),
-                            Title = relation.Title,
-                            Original = relation.Original,
-                            Official = relation.Official ? "Yes" : "No"
-                        });
-                    }
-                }
-
-                //staff
-                if (visualNovel.Staff.Count > 0)
-                {
-                    List<VnInfoStaff> vnStaff = new List<VnInfoStaff>();
-                    foreach (StaffMetadata staff in visualNovel.Staff)
-                    {
-                        vnStaff.Add(new VnInfoStaff()
-                        {
-                            VnId = visualNovel.Id,
-                            StaffId = staff.StaffId,
-                            AliasId = staff.AliasId,
-                            Name = staff.Name,
-                            Original = staff.Kanji,
-                            Role = staff.Role,
-                            Note = staff.Note
-                        });
-                    }
-                }
-
-            }
-        }
-
-        private async Task AddVnCharacters(List<Character> characters, uint vnid)
-        {
-            if (characters.Count > 0)
-            {
-                List<VnCharacterInfo> vnCharacters = new List<VnCharacterInfo>();
-                List<VnCharacterVns> vnCharacterVns = new List<VnCharacterVns>();
-                List<VnCharacterVoiced> vnCharacterVoices = new List<VnCharacterVoiced>();
-                List<VnCharacterInstances> vnCharacterInstances = new List<VnCharacterInstances>();
-                foreach (Character vncharacter in characters)
-                {
-                    VnCharacterInfo character = new VnCharacterInfo()
-                    {
-                        VnId = vnid,
-                        CharacterId = vncharacter.Id,
-                        Name = vncharacter.Name,
-                        Original = vncharacter.OriginalName,
-                        Gender = vncharacter.Gender.ToString(),
-                        BloodType = vncharacter.BloodType.ToString(),
-                        Birthday = ConvertBirthday(vncharacter.Birthday),
-                        Aliases = ConvertToCsv(vncharacter.Aliases),
-                        Description = vncharacter.Description,
-                        ImageLink = vncharacter.Image,
-                        Bust = Convert.ToInt32(vncharacter.Bust),
-                        Waist = Convert.ToInt32(vncharacter.Waist),
-                        Hip = Convert.ToInt32(vncharacter.Hip),
-                        Height = Convert.ToInt32(vncharacter.Height),
-                        Weight = Convert.ToInt32(vncharacter.Weight)
+                        Wikipedia = visualNovel.VisualNovelLinks.Wikipedia,
+                        Encubed = visualNovel.VisualNovelLinks.Encubed,
+                        Renai = visualNovel.VisualNovelLinks.Renai
                     };
+                    dbVnInfoLinks.Upsert(vnLinks);
 
-                    foreach (VndbSharp.Models.Character.VisualNovelMetadata vn in vncharacter.VisualNovels)
+                    //screenshots
+                    if (visualNovel.Screenshots.Count > 0)
                     {
-                        vnCharacterVns.Add(new VnCharacterVns()
+                        List<VnInfoScreens> vnScreenshots = new List<VnInfoScreens>();
+                        foreach (ScreenshotMetadata screenshot in visualNovel.Screenshots)
                         {
-                            CharacterId = vncharacter.Id,
-                            VnId = vn.Id,
-                            ReleaseId = vn.ReleaseId,
-                            SpoilerLevel = (byte)vn.SpoilerLevel,
-                            Role = vn.Role.ToString()
-                        });
+                            vnScreenshots.Add(new VnInfoScreens()
+                            {
+                                VnId = visualNovel.Id,
+                                ImageUrl = screenshot.Url,
+                                ReleaseId = screenshot.ReleaseId,
+                                Nsfw = screenshot.IsNsfw,
+                                Height = screenshot.Height,
+                                Width = screenshot.Width
+                            });
+                        }
+                        dbVnInfoScreens.Upsert(vnScreenshots);
                     }
 
-                    foreach (VoiceActorMetadata voice in vncharacter.VoiceActorMetadata)
+                    //relations
+                    if (visualNovel.Relations.Count > 0)
                     {
-                        vnCharacterVoices.Add(new VnCharacterVoiced()
+                        List<VnInfoRelations> vnRelations = new List<VnInfoRelations>();
+                        foreach (VisualNovelRelation relation in visualNovel.Relations)
                         {
-                            StaffId = voice.StaffId,
-                            StaffAliasId = voice.AliasId,
-                            VnId = voice.VisualNovelId,
-                            Note = voice.Note
-                        });
+                            vnRelations.Add(new VnInfoRelations()
+                            {
+                                VnId = visualNovel.Id,
+                                RelationId = relation.Id,
+                                Relation = relation.Type.ToString(),
+                                Title = relation.Title,
+                                Original = relation.Original,
+                                Official = relation.Official ? "Yes" : "No"
+                            });
+                        }
+
+                        dbVnInfoRelations.Upsert(vnRelations);
                     }
 
-                    foreach (CharacterInstances instance in vncharacter.CharacterInstances)
+                    //staff
+                    if (visualNovel.Staff.Count > 0)
                     {
-                        vnCharacterInstances.Add(new VnCharacterInstances()
+                        List<VnInfoStaff> vnStaff = new List<VnInfoStaff>();
+                        foreach (StaffMetadata staff in visualNovel.Staff)
                         {
-                            CharacterId = character.Id,
-                            Spoiler = (byte)instance.Spoiler,
-                            Name = instance.Name,
-                            Original = instance.Kanji
-                        });
+                            vnStaff.Add(new VnInfoStaff()
+                            {
+                                VnId = visualNovel.Id,
+                                StaffId = staff.StaffId,
+                                AliasId = staff.AliasId,
+                                Name = staff.Name,
+                                Original = staff.Kanji,
+                                Role = staff.Role,
+                                Note = staff.Note
+                            });
+                        }
+
+                        dbVnInfoStaff.Upsert(vnStaff);
+                    }
+
+                    //tags
+                    if (visualNovel.Tags.Count > 0)
+                    {
+                        List<VnInfoTags> vnTags = new List<VnInfoTags>();
+                        foreach (TagMetadata tag in visualNovel.Tags)
+                        {
+                            vnTags.Add(new VnInfoTags()
+                            {
+                                VnId = visualNovel.Id,
+                                TagId = tag.Id,
+                                Score = tag.Score,
+                                Spoiler = tag.SpoilerLevel
+                            });
+                        }
+
+                        dbVnInfoTags.Upsert(vnTags);
                     }
                 }
             }
+            
         }
 
-        private async Task AddVnReleases(List<Release> vnReleases, uint vnid)
+        private void FormatVnCharacters(List<Character> characters, uint vnid)
         {
-            if (vnReleases.Count > 0)
+            using (var db = new LiteDatabase(@"Database.db"))
             {
-                List<VnRelease> vnRelease = new List<VnRelease>();
-                List<VnReleaseMedia> vnReleaseMedia = new List<VnReleaseMedia>();
-                List<VnReleaseProducers> vnReleaseProducers = new List<VnReleaseProducers>();
-                List<VnReleaseVn> vnReleaseVns = new List<VnReleaseVn>();
-                foreach (Release release in vnReleases)
+                var dbCharInfo = db.GetCollection<VnCharacterInfo>("vncharacterinfo");
+                var dbCharVns = db.GetCollection<VnCharacterVns>("vncharactervns");
+                var dbCharVoices = db.GetCollection<VnCharacterVoiced>("vncharactervoiced");
+                var dbCharInstances = db.GetCollection<VnCharacterInstances>("vncharacterinstances");
+
+                if (characters.Count > 0)
                 {
-                    vnRelease.Add(new VnRelease()
+                    List<VnCharacterInfo> vnCharacters = new List<VnCharacterInfo>();
+                    List<VnCharacterVns> vnCharacterVns = new List<VnCharacterVns>();
+                    List<VnCharacterVoiced> vnCharacterVoices = new List<VnCharacterVoiced>();
+                    List<VnCharacterInstances> vnCharacterInstances = new List<VnCharacterInstances>();
+                    foreach (Character vncharacter in characters)
                     {
-                        ReleaseId = release.Id,
-                        Title = release.Name,
-                        Original = release.OriginalName,
-                        ReleaseType = release.Type.ToString(),
-                        Patch = release.IsPatch,
-                        Freeware = release.IsFreeware,
-                        Doujin = release.IsDoujin,
-                        Languages = ConvertToCsv(release.Languages),
-                        Website = release.Website,
-                        Notes = release.Notes,
-                        MinAge = Convert.ToByte(release.MinimumAge),
-                        Gtin = release.Gtin,
-                        Catalog = release.Catalog,
-                        Platforms = ConvertToCsv(release.Platforms),
-                        Resolution = release.Resolution,
-                        Voiced = release.Voiced.ToString(),
-                        Animation = string.Join(",", release.Animation)
-                    });
-
-                    if (release.Media.Count > 0)
-                    {
-                        foreach (Media media in release.Media)
+                        VnCharacterInfo character = new VnCharacterInfo()
                         {
-                            vnReleaseMedia.Add(new VnReleaseMedia()
+                            VnId = vnid,
+                            CharacterId = vncharacter.Id,
+                            Name = vncharacter.Name,
+                            Original = vncharacter.OriginalName,
+                            Gender = vncharacter.Gender.ToString(),
+                            BloodType = vncharacter.BloodType.ToString(),
+                            Birthday = ConvertBirthday(vncharacter.Birthday),
+                            Aliases = ConvertToCsv(vncharacter.Aliases),
+                            Description = vncharacter.Description,
+                            ImageLink = vncharacter.Image,
+                            Bust = Convert.ToInt32(vncharacter.Bust),
+                            Waist = Convert.ToInt32(vncharacter.Waist),
+                            Hip = Convert.ToInt32(vncharacter.Hip),
+                            Height = Convert.ToInt32(vncharacter.Height),
+                            Weight = Convert.ToInt32(vncharacter.Weight)
+                        };
+                        vnCharacters.Add(character);
+
+                        foreach (VndbSharp.Models.Character.VisualNovelMetadata vn in vncharacter.VisualNovels)
+                        {
+                            vnCharacterVns.Add(new VnCharacterVns()
                             {
-                                ReleaseId = release.Id,
-                                Medium = media.Medium,
-                                Quantity = media.Quantity
+                                CharacterId = vncharacter.Id,
+                                VnId = vn.Id,
+                                ReleaseId = vn.ReleaseId,
+                                SpoilerLevel = (byte)vn.SpoilerLevel,
+                                Role = vn.Role.ToString()
+                            });
+                        }
+
+                        foreach (VoiceActorMetadata voice in vncharacter.VoiceActorMetadata)
+                        {
+                            vnCharacterVoices.Add(new VnCharacterVoiced()
+                            {
+                                StaffId = voice.StaffId,
+                                StaffAliasId = voice.AliasId,
+                                VnId = voice.VisualNovelId,
+                                Note = voice.Note
+                            });
+                        }
+
+                        foreach (CharacterInstances instance in vncharacter.CharacterInstances)
+                        {
+                            vnCharacterInstances.Add(new VnCharacterInstances()
+                            {
+                                CharacterId = character.Id,
+                                Spoiler = (byte)instance.Spoiler,
+                                Name = instance.Name,
+                                Original = instance.Kanji
                             });
                         }
                     }
 
-                    if (release.Producers.Count > 0)
-                    {
-                        foreach (ProducerRelease producer in release.Producers)
-                        {
-                            vnReleaseProducers.Add(new VnReleaseProducers()
-                            {
-                                ReleaseId = release.Id,
-                                ProducerId = producer.Id,
-                                Developer = producer.IsDeveloper,
-                                Publisher = producer.IsPublisher,
-                                Name = producer.Name,
-                                Original = producer.OriginalName,
-                                ProducerType = producer.ProducerType
-                            });
-                        }
-                    }
-
-                    if (release.VisualNovels.Count > 0)
-                    {
-                        foreach (VndbSharp.Models.Release.VisualNovelMetadata vn in release.VisualNovels)
-                        {
-                            vnReleaseVns.Add(new VnReleaseVn()
-                            {
-                                ReleaseId = vn.Id,
-                                VnId = vnid,
-                                Name = vn.Name,
-                                Original = vn.OriginalName
-                            });
-                        }
-                    }
+                    dbCharInfo.Upsert(vnCharacters);
+                    dbCharVns.Upsert(vnCharacterVns);
+                    dbCharVoices.Upsert(vnCharacterVoices);
+                    dbCharInstances.Upsert(vnCharacterInstances);
                 }
             }
+            
+        }
+
+        private void FormatVnReleases(List<Release> vnReleases, uint vnid)
+        {
+            using (var db = new LiteDatabase(@"Database.db"))
+            {
+                var dbVnRelease = db.GetCollection<VnRelease>("vnrelease");
+                var dbVnReleaseMedia = db.GetCollection<VnReleaseMedia>("vnreleasemedia");
+                var dbVnReleaseProducers = db.GetCollection<VnReleaseProducers>("vnreleaseproducers");
+                var dbReleaseVns = db.GetCollection<VnReleaseVn>("vnreleasevn");
+                if (vnReleases.Count > 0)
+                {
+                    List<VnRelease> vnRelease = new List<VnRelease>();
+                    List<VnReleaseMedia> vnReleaseMedia = new List<VnReleaseMedia>();
+                    List<VnReleaseProducers> vnReleaseProducers = new List<VnReleaseProducers>();
+                    List<VnReleaseVn> vnReleaseVns = new List<VnReleaseVn>();
+                    foreach (Release release in vnReleases)
+                    {
+                        vnRelease.Add(new VnRelease()
+                        {
+                            ReleaseId = release.Id,
+                            Title = release.Name,
+                            Original = release.OriginalName,
+                            ReleaseType = release.Type.ToString(),
+                            Patch = release.IsPatch,
+                            Freeware = release.IsFreeware,
+                            Doujin = release.IsDoujin,
+                            Languages = ConvertToCsv(release.Languages),
+                            Website = release.Website,
+                            Notes = release.Notes,
+                            MinAge = Convert.ToByte(release.MinimumAge),
+                            Gtin = release.Gtin,
+                            Catalog = release.Catalog,
+                            Platforms = ConvertToCsv(release.Platforms),
+                            Resolution = release.Resolution,
+                            Voiced = release.Voiced.ToString(),
+                            Animation = string.Join(",", release.Animation)
+                        });
+
+                        if (release.Media.Count > 0)
+                        {
+                            foreach (Media media in release.Media)
+                            {
+                                vnReleaseMedia.Add(new VnReleaseMedia()
+                                {
+                                    ReleaseId = release.Id,
+                                    Medium = media.Medium,
+                                    Quantity = media.Quantity
+                                });
+                            }
+                        }
+
+                        if (release.Producers.Count > 0)
+                        {
+                            foreach (ProducerRelease producer in release.Producers)
+                            {
+                                vnReleaseProducers.Add(new VnReleaseProducers()
+                                {
+                                    ReleaseId = release.Id,
+                                    ProducerId = producer.Id,
+                                    Developer = producer.IsDeveloper,
+                                    Publisher = producer.IsPublisher,
+                                    Name = producer.Name,
+                                    Original = producer.OriginalName,
+                                    ProducerType = producer.ProducerType
+                                });
+                            }
+                        }
+
+                        if (release.VisualNovels.Count > 0)
+                        {
+                            foreach (VndbSharp.Models.Release.VisualNovelMetadata vn in release.VisualNovels)
+                            {
+                                vnReleaseVns.Add(new VnReleaseVn()
+                                {
+                                    ReleaseId = vn.Id,
+                                    VnId = vnid,
+                                    Name = vn.Name,
+                                    Original = vn.OriginalName
+                                });
+                            }
+                        }
+                    }
+
+                    dbVnRelease.Upsert(vnRelease);
+                    dbVnReleaseMedia.Upsert(vnReleaseMedia);
+                    dbVnReleaseProducers.Upsert(vnReleaseProducers);
+                    dbReleaseVns.Upsert(vnReleaseVns);
+                }
+
+            }
+            
         }
 
         private async Task GetDetailsFromTagDump(ReadOnlyCollection<TagMetadata> vnTags)

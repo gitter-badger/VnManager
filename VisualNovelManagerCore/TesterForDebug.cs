@@ -9,6 +9,7 @@ using LiteDB;
 using VisualNovelManagerCore.Controls.Vndb.AddVn;
 using VisualNovelManagerCore.Database;
 using VisualNovelManagerCore.Database.Model.VNDB.VnCharacter;
+using VisualNovelManagerCore.Database.Model.VNDB.VnInfo;
 using VisualNovelManagerCore.Helper.Vndb;
 using VndbSharp;
 using VndbSharp.Models;
@@ -42,31 +43,43 @@ namespace VisualNovelManagerCore
                 int characterCount = 0;
                 int releasesCount = 0;
 
-                VndbResponse<VisualNovel> visualNovels = await client.GetVisualNovelAsync(VndbFilters.Id.Equals(4), VndbFlags.FullVisualNovel);
+                VndbResponse<VisualNovel> visualNovels = await client.GetVisualNovelAsync(VndbFilters.Id.Equals(11), VndbFlags.FullVisualNovel);
                 if (visualNovels == null)
                 {
                     HandleError.HandleErrors(client.GetLastError(), 0);
                     return;
                 }
-
-                using (var db = new LiteDatabase(@"Vndb.db"))
+                var addDb = new AddDataToDb();
+                //addDb.FormatVnInfo(visualNovels);
+                using (var db = new LiteDatabase(@"Database.db"))
                 {
-                    var tbl = db.GetCollection<VnCharacterInfo>("vninfo");
-                    var visualnovel = visualNovels.FirstOrDefault();
-                    var vninfo = new VnCharacterInfo
+                    //var tbl = db.GetCollection<VnCharacterInfo>("vninfo");
+                    //var visualnovel = visualNovels.FirstOrDefault();
+                    //var vninfo = new VnCharacterInfo
+                    //{
+                    //    VnId = 4,
+                    //    CharacterId = visualnovel.Id,
+                    //    Name = visualnovel.Name,
+                    //    Original = visualnovel.OriginalName,
+                    //    Description = visualnovel.Description
+                    //};
+                    //tbl.Upsert(vninfo);
+                    ////tbl.Insert(characterList);
+                    //tbl.EnsureIndex(x => x.Id);
+                    ////var result = tbl.FindOne(x => x.Name.Equals("Shirogane Takeru"));
+                    //var result = tbl.FindById(1);
+                    //VnCharacterInfo res2 = tbl.Find(x => x.Name == "Clannad").FirstOrDefault();
+                    var dbtest = db.GetCollection<VnInfo>("vninfo");
+                    var vninfo = new VnInfo()
                     {
-                        VnId = 4,
-                        CharacterId = visualnovel.Id,
-                        Name = visualnovel.Name,
-                        Original = visualnovel.OriginalName,
-                        Description = visualnovel.Description
+                        VnId = 92,
+                        Title = "Muv Luv ALternative",
+                        Aliases = "test1,test2"
+                        
                     };
-                    tbl.Upsert(vninfo);
-                    //tbl.Insert(characterList);
-                    tbl.EnsureIndex(x => x.Id);
-                    //var result = tbl.FindOne(x => x.Name.Equals("Shirogane Takeru"));
-                    var result = tbl.FindById(1);
-                    VnCharacterInfo res2 = tbl.Find(x => x.Name == "Clannad").FirstOrDefault();
+                    dbtest.Upsert(vninfo);
+                    //var foo = dbVnInfo.FindById(1);
+                    //var bar = dbVnInfo.FindAll().ToList();
                 }
 
 
