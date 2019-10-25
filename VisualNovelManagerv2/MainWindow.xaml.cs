@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AdonisUI.Controls;
 using VisualNovelManagerCore.Database;
 using VisualNovelManagerCore;
 
@@ -21,7 +22,7 @@ namespace VisualNovelManagerv2
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : AdonisWindow
     {
         public MainWindow()
         {
