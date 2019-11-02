@@ -1,0 +1,45 @@
+﻿<controls:AdonisWindow x:Class="VnManagerUI.Views.RootView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VnManagerUI.Views"
+        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+        xmlns:viewshome="clr-namespace:VnManagerUI.Views.Home"
+        xmlns:viewsside="clr-namespace:VnManagerUI.Views.Home.Sidebar"
+        xmlns:viewsmain="clr-namespace:VnManagerUI.Views.Home.Main"
+        mc:Ignorable="d" 
+        Title="MainWindow" MinWidth="800" MinHeight="600" Width="1024" Height="768">
+    <Grid>
+        <DockPanel LastChildFill="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid DockPanel.Dock="Top">
+                <viewshome:TopInfoBar MinHeight="50"/>
+            </Grid>
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem Content="Ready"/>
+            </StatusBar>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="147"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="90*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <viewsside:LastPlayed Grid.Row="0" Grid.Column="0"/>
+                <viewsside:SearchCategory Grid.Row="1" Grid.Column="0"/>
+                <viewsside:UserList Grid.Row="2"  Grid.Column="0"/>
+                <viewsside:AddGame Grid.Row="3" Grid.Column="0"/>
+
+                <viewsmain:GameGrid Grid.Row="0" Grid.Column="1" Grid.RowSpan="4"></viewsmain:GameGrid>
+
+            </Grid>
+
+        </DockPanel>
+    </Grid>
+    
+</controls:AdonisWindow>
