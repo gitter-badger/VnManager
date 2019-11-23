@@ -24,5 +24,6 @@ namespace VnManagerUI.Views
         {
             InitializeComponent();
         }
+
     }
 }

@@ -7,14 +7,16 @@
     <Application.Resources>
          <ResourceDictionary>
              <ResourceDictionary.MergedDictionaries>
-                <s:ApplicationLoader>
+                <!-- Boostrapper -->
+                 <s:ApplicationLoader>
                     <s:ApplicationLoader.Bootstrapper>
                         <local:Bootstrapper/>
                     </s:ApplicationLoader.Bootstrapper>
                 </s:ApplicationLoader>
-
+                <!-- AdonisUI -->
                  <ResourceDictionary Source="{x:Static adonisUi:ResourceLocator.DarkColorScheme}"/>
                  <ResourceDictionary Source="{x:Static adonisUi:ResourceLocator.ClassicTheme}"/>
+
             </ResourceDictionary.MergedDictionaries>
          </ResourceDictionary>
     </Application.Resources>

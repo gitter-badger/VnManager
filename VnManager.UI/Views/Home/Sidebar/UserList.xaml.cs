@@ -23,6 +23,10 @@ namespace VnManagerUI.Views.Home.Sidebar
         public UserList()
         {
             InitializeComponent();
+            for (int i = 0; i < 45; i++)
+            {
+                UserListBox.Items.Add($"test-{i}");
+            }
         }
     }
 }

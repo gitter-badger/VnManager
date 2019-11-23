@@ -8,6 +8,7 @@
         xmlns:viewshome="clr-namespace:VnManagerUI.Views.Home"
         xmlns:viewsside="clr-namespace:VnManagerUI.Views.Home.Sidebar"
         xmlns:viewsmain="clr-namespace:VnManagerUI.Views.Home.Main"
+        xmlns:extensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
         mc:Ignorable="d" 
         Title="MainWindow" MinWidth="800" MinHeight="600" Width="1024" Height="768">
     <Grid>
@@ -30,12 +31,12 @@
                     <RowDefinition Height="90*"/>
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
-                <viewsside:LastPlayed Grid.Row="0" Grid.Column="0"/>
-                <viewsside:SearchCategory Grid.Row="1" Grid.Column="0"/>
-                <viewsside:UserList Grid.Row="2"  Grid.Column="0"/>
-                <viewsside:AddGame Grid.Row="3" Grid.Column="0"/>
+                <viewsside:LastPlayed Grid.Row="0" Grid.Column="0" Margin="5,0,0,0"/>
+                <viewsside:SearchCategory Grid.Row="1" Grid.Column="0" Margin="5,0,0,0"/>
+                <viewsside:UserList Grid.Row="2"  Grid.Column="0" Margin="5,0,0,0" extensions:LayerExtension.Layer="1"/>
+                <viewsside:AddGame Grid.Row="3" Grid.Column="0" Margin="5,0,0,0" extensions:LayerExtension.Layer="3"/>
 
-                <viewsmain:GameGrid Grid.Row="0" Grid.Column="1" Grid.RowSpan="4"></viewsmain:GameGrid>
+                <viewsmain:GameGrid Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Margin="5"/>
 
             </Grid>
 
