@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdonisUI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,17 +11,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VisualNovelManager
+namespace VisualNovelManager.Windows
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for RootView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class RootView : AdonisWindow
     {
-        public MainWindow()
+        public RootView()
         {
             InitializeComponent();
         }
