@@ -113,10 +113,6 @@
     <Compile Include="TesterForDebug.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LiteDB-Nightly\LiteDB.csproj">
-      <Project>{fd1f898a-d735-46b9-b308-6fd65f9ed449}</Project>
-      <Name>LiteDB</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VndbSharp\VndbSharp\VndbSharp.csproj">
       <Project>{1f92c059-4b95-433b-a780-04d5a7f36533}</Project>
       <Name>VndbSharp</Name>
