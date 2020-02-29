@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiteDB, Version=5.0.3.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.5.0.3\lib\net45\LiteDB.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.0.1\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
@@ -40,6 +43,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -84,19 +88,11 @@
     <Compile Include="Database\Model\VNDB\VnUserList\VnWishList.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Helper\ConnectionTest.cs" />
-    <Compile Include="Helper\Converters\Base64Converter.cs" />
-    <Compile Include="Helper\Converters\NullImageConverter.cs" />
-    <Compile Include="Helper\Converters\YesNoBoolConverter.cs" />
     <Compile Include="Helper\ConvertTextBBcode.cs" />
     <Compile Include="Helper\CreateIconHelper.cs" />
     <Compile Include="Helper\EmptyBitmap.cs" />
-    <Compile Include="Helper\Extensions\BindableRichTextBox.cs" />
-    <Compile Include="Helper\Extensions\PasswordBoxBindingBehavior.cs" />
-    <Compile Include="Helper\Extensions\RangeEnabledObservableCollection.cs" />
-    <Compile Include="Helper\Extensions\TextBoxExtension.cs" />
     <Compile Include="Helper\IsJpnText.cs" />
     <Compile Include="Helper\MeasureStringSize.cs" />
-    <Compile Include="Helper\MutableKeyValuePair.cs" />
     <Compile Include="Helper\ProcessExtensions.cs" />
     <Compile Include="Helper\ValidateExe.cs" />
     <Compile Include="Helper\ValidateXml.cs" />
