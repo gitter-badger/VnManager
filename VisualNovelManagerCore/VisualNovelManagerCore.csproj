@@ -86,16 +86,6 @@
     <Compile Include="Database\Model\VNDB\VnUserList\VnVisualNovelList.cs" />
     <Compile Include="Database\Model\VNDB\VnUserList\VnVoteList.cs" />
     <Compile Include="Database\Model\VNDB\VnUserList\VnWishList.cs" />
-    <Compile Include="Globals.cs" />
-    <Compile Include="Helper\ConnectionTest.cs" />
-    <Compile Include="Helper\ConvertTextBBcode.cs" />
-    <Compile Include="Helper\CreateIconHelper.cs" />
-    <Compile Include="Helper\EmptyBitmap.cs" />
-    <Compile Include="Helper\IsJpnText.cs" />
-    <Compile Include="Helper\MeasureStringSize.cs" />
-    <Compile Include="Helper\ProcessExtensions.cs" />
-    <Compile Include="Helper\ValidateExe.cs" />
-    <Compile Include="Helper\ValidateXml.cs" />
     <Compile Include="Helper\Vndb\HandleError.cs" />
     <Compile Include="Helper\Vndb\RequestOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
