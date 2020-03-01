@@ -101,6 +101,36 @@
     <Compile Include="Helpers\MeasureStringSize.cs" />
     <Compile Include="Helpers\ProcessExtensions.cs" />
     <Compile Include="Helpers\ValidateExe.cs" />
+    <Compile Include="Models\Db\Vndb\VnCharacter\DbVnCharacterInfo.cs" />
+    <Compile Include="Models\Db\Vndb\VnCharacter\DbVnCharacterInstances.cs" />
+    <Compile Include="Models\Db\Vndb\VnCharacter\DbVnCharacterTraits.cs" />
+    <Compile Include="Models\Db\Vndb\VnCharacter\DbVnCharacterVns.cs" />
+    <Compile Include="Models\Db\Vndb\VnCharacter\DbVnCharacterVoiced.cs" />
+    <Compile Include="Models\Db\Vndb\VnInfo\DbVnInfo.cs" />
+    <Compile Include="Models\Db\Vndb\VnInfo\DbVnInfoAnime.cs" />
+    <Compile Include="Models\Db\Vndb\VnInfo\DbVnInfoLinks.cs" />
+    <Compile Include="Models\Db\Vndb\VnInfo\DbVnInfoRelations.cs" />
+    <Compile Include="Models\Db\Vndb\VnInfo\DbVnInfoScreens.cs" />
+    <Compile Include="Models\Db\Vndb\VnInfo\DbVnInfoStaff.cs" />
+    <Compile Include="Models\Db\Vndb\VnInfo\DbVnInfoTags.cs" />
+    <Compile Include="Models\Db\Vndb\VnProducer\DbVnProducer.cs" />
+    <Compile Include="Models\Db\Vndb\VnProducer\DbVnProducerLinks.cs" />
+    <Compile Include="Models\Db\Vndb\VnProducer\DbVnProducerRelations.cs" />
+    <Compile Include="Models\Db\Vndb\VnRelease\DbVnRelease.cs" />
+    <Compile Include="Models\Db\Vndb\VnRelease\DbVnReleaseMedia.cs" />
+    <Compile Include="Models\Db\Vndb\VnRelease\DbVnReleaseProducers.cs" />
+    <Compile Include="Models\Db\Vndb\VnRelease\DbVnReleaseVn.cs" />
+    <Compile Include="Models\Db\Vndb\VnStaff\DbVnStaff.cs" />
+    <Compile Include="Models\Db\Vndb\VnStaff\DbVnStaffAliases.cs" />
+    <Compile Include="Models\Db\Vndb\VnStaff\DbVnStaffLinks.cs" />
+    <Compile Include="Models\Db\Vndb\VnTagTrait\DbVnTagData.cs" />
+    <Compile Include="Models\Db\Vndb\VnTagTrait\DbVnTraitData.cs" />
+    <Compile Include="Models\Db\Vndb\VnUserList\DbVnVisualNovelList.cs" />
+    <Compile Include="Models\Db\Vndb\VnUserList\DbVnVoteList.cs" />
+    <Compile Include="Models\Db\Vndb\VnUserList\DbVnWishList.cs" />
+    <Compile Include="UserControls\Home\Main\GameCard.xaml.cs">
+      <DependentUpon>GameCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Home\Main\GameGrid.xaml.cs">
       <DependentUpon>GameGrid.xaml</DependentUpon>
     </Compile>
@@ -153,6 +183,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="UserControls\Home\Main\GameCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\Home\Main\GameGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
