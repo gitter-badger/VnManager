@@ -5,10 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VisualNovelManager.Windows"
         xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+        xmlns:viewshome="clr-namespace:VisualNovelManager.UserControls"
+        xmlns:viewsside="clr-namespace:VisualNovelManager.UserControls.Sidebar"
+        xmlns:viewsmain="clr-namespace:VisualNovelManager.UserControls.Home.Main"
+        xmlns:extensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
         mc:Ignorable="d"
-        Title="Stylet Start Project" Height="450" Width="800"
+        Title="MainWindow" MinWidth="800" MinHeight="600" Width="1024" Height="768"
         d:DataContext="{d:DesignInstance local:RootViewModel}">
-    <TextBlock FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center">
-        Hello Stylet!
-    </TextBlock>
+    <Grid>
+        <DockPanel LastChildFill="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid DockPanel.Dock="Top">
+                <viewshome:TopInfoBar MinHeight="50"/>
+            </Grid>
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem Content="Ready"/>
+            </StatusBar>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="147"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="90*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <viewsside:LastPlayed Grid.Row="0" Grid.Column="0" Margin="5,0,0,0"/>
+                <viewsside:SearchCategory Grid.Row="1" Grid.Column="0" Margin="5,0,0,0"/>
+                <viewsside:UserList Grid.Row="2"  Grid.Column="0" Margin="5,0,0,0" extensions:LayerExtension.Layer="1"/>
+                <viewsside:AddGame Grid.Row="3" Grid.Column="0" Margin="5,0,0,0" extensions:LayerExtension.Layer="3"/>
+
+                <viewsmain:GameGrid Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Margin="5"/>
+
+            </Grid>
+
+        </DockPanel>
+    </Grid>
 </controls:AdonisWindow>
