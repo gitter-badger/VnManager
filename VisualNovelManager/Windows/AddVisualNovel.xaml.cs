@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdonisUI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,26 +11,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VisualNovelManager.UserControls.Sidebar
+namespace VisualNovelManager.Windows
 {
     /// <summary>
-    /// Interaction logic for AddGame.xaml
+    /// Interaction logic for AddVisualNovel.xaml
     /// </summary>
-    public partial class AddGame : UserControl
+    public partial class AddVisualNovel : AdonisWindow
     {
-        public AddGame()
+        public AddVisualNovel()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var add = new Windows.AddVisualNovel();
-            add.WindowStyle = WindowStyle.None;
-            add.Show();
         }
     }
 }

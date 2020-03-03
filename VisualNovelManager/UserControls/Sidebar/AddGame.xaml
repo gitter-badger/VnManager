@@ -11,7 +11,7 @@
         <StackPanel Orientation="Vertical">
             <Separator Margin="0,0,0,10"/>
 
-            <Button Width="100" Height="23" >
+            <Button Width="100" Height="23" Click="Button_Click" >
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconMaterial Kind="Plus"/>
                     <TextBlock Text="Add Game" VerticalAlignment="Center" Margin="10,0,0,0"/>

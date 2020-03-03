@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Converters\Base64Converter.cs" />
+    <Compile Include="Converters\BoolToStringConverter.cs" />
     <Compile Include="Converters\NullImageConverter.cs" />
     <Compile Include="Converters\YesNoBoolConverter.cs" />
     <Compile Include="Extensions\BindableRichTextBox.cs" />
@@ -101,6 +102,8 @@
     <Compile Include="Helpers\MeasureStringSize.cs" />
     <Compile Include="Helpers\ProcessExtensions.cs" />
     <Compile Include="Helpers\ValidateExe.cs" />
+    <Compile Include="Helpers\Vndb\HandleError.cs" />
+    <Compile Include="Helpers\Vndb\RequestOptions.cs" />
     <Compile Include="Models\Db\Vndb\VnCharacter\DbVnCharacterInfo.cs" />
     <Compile Include="Models\Db\Vndb\VnCharacter\DbVnCharacterInstances.cs" />
     <Compile Include="Models\Db\Vndb\VnCharacter\DbVnCharacterTraits.cs" />
@@ -148,6 +151,9 @@
     </Compile>
     <Compile Include="UserControls\TopInfoBar.xaml.cs">
       <DependentUpon>TopInfoBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddVisualNovel.xaml.cs">
+      <DependentUpon>AddVisualNovel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\RootView.xaml.cs">
       <DependentUpon>RootView.xaml</DependentUpon>
@@ -216,10 +222,20 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\AddVisualNovel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\RootView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dialogs\" />
+    <Folder Include="ViewModels\Dialogs\" />
+    <Folder Include="ViewModels\Pages\" />
+    <Folder Include="ViewModels\Windows\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
