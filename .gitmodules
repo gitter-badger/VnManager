@@ -1,0 +1,3 @@
+[submodule "VndbLib"]
+	path = VndbLib
+	url = https://github.com/Nikey646/VndbSharp.git

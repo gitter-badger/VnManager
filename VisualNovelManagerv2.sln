@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Old", "Old", "{7BCECA5F-6E1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualNovelManager", "VisualNovelManager\VisualNovelManager.csproj", "{674BF150-B1C4-41E5-B15D-868BA46CA912}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VndbSharp", "VndbLib\VndbSharp\VndbSharp.csproj", "{33B3BCC6-846C-457E-A95C-FC012CB74CB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{674BF150-B1C4-41E5-B15D-868BA46CA912}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{674BF150-B1C4-41E5-B15D-868BA46CA912}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{674BF150-B1C4-41E5-B15D-868BA46CA912}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33B3BCC6-846C-457E-A95C-FC012CB74CB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33B3BCC6-846C-457E-A95C-FC012CB74CB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33B3BCC6-846C-457E-A95C-FC012CB74CB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33B3BCC6-846C-457E-A95C-FC012CB74CB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

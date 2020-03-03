@@ -181,7 +181,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\VndbLib\VndbSharp\VndbSharp.csproj">
+      <Project>{33b3bcc6-846c-457e-a95c-fc012cb74cb0}</Project>
+      <Name>VndbSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="UserControls\Home\Main\GameCard.xaml">
       <SubType>Designer</SubType>
