@@ -99,12 +99,6 @@
     <Compile Include="TesterForDebug.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VndbSharp\VndbSharp\VndbSharp.csproj">
-      <Project>{1f92c059-4b95-433b-a780-04d5a7f36533}</Project>
-      <Name>VndbSharp</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
