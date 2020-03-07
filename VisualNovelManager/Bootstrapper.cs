@@ -19,6 +19,8 @@ namespace VisualNovelManager
         protected override void Configure()
         {
             // Perform any other configuration before the application starts
+            var startup = new Initializers.Startup();
+            startup.RunStartupTasks();
         }
     }
 }

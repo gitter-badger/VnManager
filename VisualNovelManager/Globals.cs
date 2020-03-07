@@ -20,7 +20,7 @@ namespace VisualNovelManager
         public static uint VnId;
         public static bool NsfwEnabled = false;
         public static SpoilerLevel MaxSpoiler = SpoilerLevel.None;
-        public static LiteDatabase LiteDbInstance = new LiteDatabase(@"MyData.db");
+        public static LiteDatabase LiteDbInstance = new LiteDatabase(Globals.DirectoryPath + @"\Data\Database\Data.db");
         public static LogLevel Loglevel = LogLevel.Normal;
         public static ILogger Logger = new LoggerConfiguration().WriteTo.File(new SerilogFormatter(), string.Format(@"{0}\Data\logs\{1}-{2}-{3}_{4}.log", DirectoryPath, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year, Loglevel.ToString())).CreateLogger();
     }

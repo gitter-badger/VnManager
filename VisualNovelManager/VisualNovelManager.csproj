@@ -256,4 +256,15 @@
     <Folder Include="ViewModels\Pages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>ROBOCOPY "$(TargetDir) " "$(TargetDir)Data\libs\ " *.dll *.pdb *.xml /MOVE
+ROBOCOPY "$(TargetDir)x86" "$(TargetDir)Data\libs\x86 "  /MOVE
+ROBOCOPY "$(TargetDir)x64" "$(TargetDir)Data\libs\x64 "  /MOVE
+DEL *.dll *.pdb *.xml
+
+
+
+
+if errorlevel 1 exit 0 else exit %25errorlevel%25</PostBuildEvent>
+  </PropertyGroup>
 </Project>

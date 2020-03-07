@@ -9,6 +9,11 @@ namespace VisualNovelManager.Initializers
 {
     public class Startup
     {
+        public void RunStartupTasks()
+        {
+            CreateFolders();
+        }
+        
         private void CreateFolders()
         {
             Directory.CreateDirectory(Globals.DirectoryPath + @"\Data\config");
