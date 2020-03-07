@@ -117,6 +117,7 @@
     <Compile Include="Helpers\ValidateExe.cs" />
     <Compile Include="Helpers\Vndb\HandleError.cs" />
     <Compile Include="Helpers\Vndb\RequestOptions.cs" />
+    <Compile Include="Initializers\Startup.cs" />
     <Compile Include="Models\Db\Vndb\VnCharacter\DbVnCharacterInfo.cs" />
     <Compile Include="Models\Db\Vndb\VnCharacter\DbVnCharacterInstances.cs" />
     <Compile Include="Models\Db\Vndb\VnCharacter\DbVnCharacterTraits.cs" />
