@@ -30,6 +30,7 @@ namespace VisualNovelManager.UserControls.Sidebar
             var add = new Windows.AddVisualNovel();
             add.WindowStyle = WindowStyle.None;
             add.Show();
+            Globals.Logger.Information("TestLog");
         }
     }
 }
