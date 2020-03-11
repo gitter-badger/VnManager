@@ -17,10 +17,11 @@ namespace VisualNovelManager.Helpers.Vndb
             if (error is MissingError missing)
             {
                 Debug.WriteLine($"A Missing Error occured, the field \"{missing.Field}\" was missing.");
+                Globals.Logger.Warning($"A Missing Error occured, the field \"{missing.Field}\" was missing.");
             }
             else if (error is BadArgumentError badArg)
             {
-                Debug.WriteLine($"A BadArgument Error occured, the field \"{badArg.Field}\" is invalid.");
+                Globals.Logger.Warning($"A BadArgument Error occured, the field \"{badArg.Field}\" is invalid.");
             }
             else if (error is ThrottledError throttled)
             {
@@ -30,14 +31,13 @@ namespace VisualNovelManager.Helpers.Vndb
                     {
                         return;
                     }
-                    Debug.WriteLine("minsec: " + (throttled.MinimumWait - DateTime.Now).TotalSeconds);
-                    Debug.WriteLine("maxsec: " + (throttled.FullWait - DateTime.Now).TotalSeconds);
+                    var minsec = (throttled.MinimumWait - DateTime.Now).TotalSeconds;
+                    var maxsec = (throttled.FullWait - DateTime.Now).TotalSeconds;
                     var minSeconds = TimeSpan.FromSeconds((throttled.MinimumWait - DateTime.Now).TotalSeconds); // Not sure if this is correct
                     var fullSeconds = TimeSpan.FromSeconds((throttled.FullWait - DateTime.Now).TotalSeconds); // Not sure if this is correct
-                    Debug.WriteLine(
-                        $"A Throttled Error occured, you need to wait at minimum \"{minSeconds}\" seconds, " +
-                        $"and preferably \"{fullSeconds}\" before issuing commands.");
                     TimeSpan timeSpan;
+                    Globals.Logger.Warning($"minsec {0}, maxsec: {1}\nA Throttled Error occured, you need to wait at minimum {2} seconds and preferably {4} before issuing commands.", minsec, maxsec, minSeconds, fullSeconds);
+
                     //double sleepTime = 0;
                     //set seconds to sleep
                     if (counter == 0)
@@ -60,36 +60,33 @@ namespace VisualNovelManager.Helpers.Vndb
 
                     if (timeSpan >= new TimeSpan(0, 0, 0, 0, 0))
                     {
-                        Debug.WriteLine($"Please wait {timeSpan.TotalMinutes} minutes and {timeSpan.TotalSeconds} seconds");
+                        Globals.Logger.Warning($"Please wait {timeSpan.TotalMinutes} minutes and {timeSpan.TotalSeconds} seconds");
                         Thread.Sleep(timeSpan);
                     }
                 }
                 catch (Exception ex)
                 {
+                    Globals.Logger.Error(ex, "Throttled logic failed");
                     throw;
                 }
             }
             else if (error is GetInfoError getInfo)
             {
-                Debug.WriteLine($"A GetInfo Error occured, the flag \"{getInfo.Flag}\" is not valid on the issued command.");
+                Globals.Logger.Warning($"A GetInfo Error occured, the flag {0} is not valid on the issued command.", getInfo.Flag);
             }
             else if (error is InvalidFilterError invalidFilter)
             {
-                Debug.WriteLine(
-                    $"A InvalidFilter Error occured, the filter combination of \"{invalidFilter.Field}\", " +
-                    $"\"{invalidFilter.Operator}\", \"{invalidFilter.Value}\" is not a valid combination.");
+                Globals.Logger.Warning($"A InvalidFilter Error occured, the filter combination of {0}, {1}, {2} is not a valid combination.", invalidFilter.Field, invalidFilter.Operator, invalidFilter.Value);
             }
             else if (error is BadAuthenticationError badAuthentication)
             {
-                Debug.WriteLine(
-                    $"A BadAuthenticationError occured. This is caused by an incorrect username or pasword.\n" +
-                    $"Message: {badAuthentication.Message}");
+                Globals.Logger.Warning($"A BadAuthenticationError occured. This is caused by an incorrect username or pasword.\nMessage: {badAuthentication.Message}");
             }
             else
             {
-                Debug.WriteLine($"A {error.Type} Error occured.");
+                Globals.Logger.Warning($"A {error.Type} Error occured.");
             }
-            Debug.WriteLine($"Message: {error.Message}");
+            Globals.Logger.Warning($"Message: {error.Message}");
         }
     }
 }
