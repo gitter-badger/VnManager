@@ -107,6 +107,7 @@
     <Compile Include="Converters\YesNoBoolConverter.cs" />
     <Compile Include="Extensions\BindableRichTextBox.cs" />
     <Compile Include="Extensions\MutableKeyValuePair.cs" />
+    <Compile Include="Extensions\ObservableRangeCollection.cs" />
     <Compile Include="Extensions\PasswordBoxBindingBehavior.cs" />
     <Compile Include="Extensions\RangeEnabledObservableCollection.cs" />
     <Compile Include="Extensions\TextBoxExtension.cs" />

@@ -12,6 +12,9 @@ using VisualNovelManager.Helpers.Vndb;
 using VndbSharp.Models;
 using VndbSharp.Models.VisualNovel;
 using System.Threading;
+using System.Collections.ObjectModel;
+using VisualNovelManager.Extensions;
+using VisualNovelManager.Helpers;
 
 namespace VisualNovelManager.ViewModels.Windows
 {
@@ -21,6 +24,7 @@ namespace VisualNovelManager.ViewModels.Windows
         public string VnName { get; set; }
         public string ExePath { get; set; }
         public string IconPath { get; set; }
+        public ObservableRangeCollection<string> SuggestedNamesCollection { get; set; }
 
 
         private bool IsJapaneseText(string text)
@@ -29,6 +33,44 @@ namespace VisualNovelManager.ViewModels.Windows
             return regex.IsMatch(text);
         }
 
+        private async Task SearchName()
+        {
+            if (ConnectionTest.VndbTcpSocketTest() == false)
+            {
+                Globals.Logger.Warning("Could not connect to Vndb API over SSL");
+                //Globals.StatusBar.SetOnlineStatusColor(false);
+                //Globals.StatusBar.IsShowOnlineStatusEnabled = true;
+                await Task.Delay(3500);
+                //Globals.StatusBar.IsShowOnlineStatusEnabled = false;
+                return;
+            }
+            try
+            {
+                if (VnName == null || VnName.Length <= 2) return;
+                //if (IsRunning != false) return;
+                //IsRunning = true;
+                using (Vndb client = new Vndb(true))
+                {
+                    SuggestedNamesCollection.Clear();
+                    VndbResponse<VisualNovel> _vnNameList = null;
+                    _vnNameList = await client.GetVisualNovelAsync(VndbFilters.Search.Fuzzy(VnName));
+                    if (_vnNameList == null)
+                    {
+                        HandleError.HandleErrors(client.GetLastError(), 0);
+                        return;
+                    }
+                    //namelist gets a  list of english names if text input was english, or japanese names if input was japanese
+                    List<string> nameList = IsJapaneseText(VnName) == true ? _vnNameList.Select(item => item.OriginalName).ToList() : _vnNameList.Select(item => item.Name).ToList();
+                    SuggestedNamesCollection.AddRange(nameList.Where(x => !string.IsNullOrEmpty(x)).ToList());
+                    //IsDropDownOpen = true;
+                    //IsRunning = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Globals.Logger.Error(ex, "Failed to search name");                
+            }
+        }
 
     }
     public class AddVnViewModelValidator: AbstractValidator<AddVisualNovelViewModel>

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace VisualNovelManager.Helpers
 {
-    internal class ConnectionTest
+    public class ConnectionTest
     {
-        internal static bool VndbTcpSocketTest()
+        public static bool VndbTcpSocketTest()
         {
             try
             {
