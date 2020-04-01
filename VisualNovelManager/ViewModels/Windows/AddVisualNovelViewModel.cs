@@ -15,6 +15,8 @@ using System.Threading;
 using System.Collections.ObjectModel;
 using VisualNovelManager.Extensions;
 using VisualNovelManager.Helpers;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace VisualNovelManager.ViewModels.Windows
 {
@@ -26,13 +28,18 @@ namespace VisualNovelManager.ViewModels.Windows
         public string IconPath { get; set; }
         public ObservableRangeCollection<string> SuggestedNamesCollection { get; set; }
 
+        public AddVisualNovelViewModel()
+        {
+            var validator = new AddVnViewModelValidator();
+            var results = validator.Validate(this);
+        }
 
         private bool IsJapaneseText(string text)
         {
             Regex regex = new Regex(@"/[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B/g");
             return regex.IsMatch(text);
         }
-
+        
         private async Task SearchName()
         {
             if (ConnectionTest.VndbTcpSocketTest() == false)
@@ -218,9 +225,22 @@ namespace VisualNovelManager.ViewModels.Windows
         } 
         #endregion
 
+    }
 
 
+    public class VnIdNameBoolToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value != null && (bool)value)
+                return "Vn Name";
+            else
+                return "Vn ID";
+        }
 
-
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -101,7 +101,6 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Converters\Base64Converter.cs" />
-    <Compile Include="Converters\BoolToStringConverter.cs" />
     <Compile Include="Converters\NullImageConverter.cs" />
     <Compile Include="Converters\SerilogFormatter.cs" />
     <Compile Include="Converters\YesNoBoolConverter.cs" />
